@@ -1,4 +1,4 @@
-import { CarCard, CustomFilter, Hero, SearchBar } from "@/components";
+import { CarCard, CustomFilter, Hero, SearchBar, ShowMore } from "@/components";
 import { fuels, yearsOfProduction } from "@/constants";
 import { fetchCars } from "@/utils";
 import Image from "next/image";
@@ -14,7 +14,6 @@ export default async function Home({ searchParams }: { searchParams: any }) {
 
     const isDataEmpty =
         !Array.isArray(allCars) || allCars.length < 0 || !allCars;
-    console.log(allCars);
 
     return (
         <main className="overflow-hidden">
@@ -45,6 +44,11 @@ export default async function Home({ searchParams }: { searchParams: any }) {
                                 <CarCard car={car} key={index} />
                             ))}
                         </div>
+
+                        <ShowMore
+                            pageNumber={(searchParams.limit || 10) / 10}
+                            isNext={(searchParams.limit || 10) > allCars.length}
+                        />
                     </section>
                 ) : (
                     <div className="home__error-container">
